@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Entrepreneur OS — AI-Powered Founder Path</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --bg3: #1a1a24;
+  --bg4: #22222e;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #f0f0f5;
+  --text2: #8888aa;
+  --text3: #55556a;
+  --green: #22c55e;
+  --green-bg: rgba(34,197,94,0.1);
+  --green-border: rgba(34,197,94,0.25);
+  --blue: #3b82f6;
+  --blue-bg: rgba(59,130,246,0.1);
+  --blue-border: rgba(59,130,246,0.25);
+  --amber: #f59e0b;
+  --amber-bg: rgba(245,158,11,0.1);
+  --amber-border: rgba(245,158,11,0.25);
+  --red: #ef4444;
+  --red-bg: rgba(239,68,68,0.1);
+  --red-border: rgba(239,68,68,0.25);
+  --purple: #a855f7;
+  --purple-bg: rgba(168,85,247,0.1);
+  --purple-border: rgba(168,85,247,0.25);
+  --font: 'Space Grotesk', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+
+.header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-brand { display: flex; align-items: center; gap: 10px; }
+.header-logo {
+  width: 32px; height: 32px;
+  background: var(--purple);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 16px;
+}
+.header-title { font-size: 15px; font-weight: 600; color: var(--text); }
+.header-sub { font-size: 11px; color: var(--text3); font-family: var(--mono); }
+.header-date { font-size: 12px; color: var(--text3); font-family: var(--mono); }
+
+.main { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+.hud {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+@media(max-width:600px) { .hud { grid-template-columns: repeat(2,1fr); } }
+.stat {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.85rem;
+  text-align: center;
+}
+.stat-val { font-size: 22px; font-weight: 700; color: var(--text); font-family: var(--mono); line-height: 1; }
+.stat-val.purple { color: var(--purple); }
+.stat-val.green { color: var(--green); }
+.stat-val.amber { color: var(--amber); }
+.stat-lbl { font-size: 11px; color: var(--text3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.xp-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.xp-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.xp-level { font-size: 13px; font-weight: 600; color: var(--purple); }
+.xp-nums { font-size: 12px; color: var(--text3); font-family: var(--mono); }
+.xp-track { height: 8px; background: var(--bg4); border-radius: 99px; overflow: hidden; }
+.xp-fill { height: 100%; background: var(--purple); border-radius: 99px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+
+.tabs {
+  display: flex; gap: 6px; margin-bottom: 1.25rem; flex-wrap: wrap;
+}
+.tab {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  font-size: 13px; font-weight: 500;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font);
+  display: flex; align-items: center; gap: 6px;
+}
+.tab:hover { border-color: var(--border2); color: var(--text); }
+.tab.on { background: var(--purple-bg); color: var(--purple); border-color: var(--purple-border); }
+
+.sec { display: none; }
+.sec.on { display: block; }
+
+.phase-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 600;
+  padding: 4px 12px; border-radius: 99px;
+  margin-bottom: 1rem;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.p1 { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+.p2 { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+.p3 { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.p4 { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+.p5 { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
+
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.85rem;
+}
+.cat-title {
+  font-size: 13px; font-weight: 600; color: var(--text2);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 7px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.cat-title i { font-size: 16px; }
+
+.quest {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: opacity 0.1s;
+}
+.quest:last-child { border-bottom: none; padding-bottom: 0; }
+.quest:hover { opacity: 0.85; }
+.quest-box {
+  width: 20px; height: 20px;
+  border: 1.5px solid var(--border2);
+  border-radius: 5px; flex-shrink: 0; margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; background: var(--bg3);
+}
+.quest-box.done { background: var(--purple); border-color: var(--purple); }
+.quest-box.done i { color: #fff; font-size: 13px; }
+.quest-text { font-size: 14px; color: var(--text); line-height: 1.5; flex: 1; }
+.quest-text.done { text-decoration: line-through; color: var(--text3); }
+.xp-chip {
+  font-size: 11px; font-weight: 600;
+  color: var(--purple);
+  background: var(--purple-bg);
+  border: 1px solid var(--purple-border);
+  border-radius: 99px;
+  padding: 2px 8px; flex-shrink: 0; margin-top: 2px;
+  font-family: var(--mono);
+}
+
+.boss-card {
+  background: var(--red-bg);
+  border: 1px solid var(--red-border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.85rem;
+}
+.boss-title {
+  font-size: 13px; font-weight: 700; color: var(--red);
+  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 7px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.boss-desc { font-size: 14px; color: var(--red); opacity: 0.85; line-height: 1.6; }
+
+.warn-card {
+  background: var(--amber-bg);
+  border: 1px solid var(--amber-border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.85rem;
+}
+.warn-title {
+  font-size: 13px; font-weight: 700; color: var(--amber);
+  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 7px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.warn-desc { font-size: 14px; color: var(--amber); opacity: 0.85; line-height: 1.6; }
+
+.model-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.model-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
+.model-name { font-size: 15px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.model-earn { font-size: 12px; font-weight: 600; color: var(--green); background: var(--green-bg); border: 1px solid var(--green-border); padding: 3px 10px; border-radius: 99px; font-family: var(--mono); }
+.model-desc { font-size: 13px; color: var(--text2); line-height: 1.6; margin-bottom: 10px; }
+.model-steps { display: flex; flex-direction: column; gap: 6px; }
+.model-step { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--text2); }
+.step-num {
+  background: var(--purple-bg); color: var(--purple);
+  border: 1px solid var(--purple-border);
+  border-radius: 50%; width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  font-family: var(--mono);
+}
+
+.gap-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.gap-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.gap-title { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; }
+.gap-pain { font-size: 13px; color: var(--text2); line-height: 1.5; margin-bottom: 8px; }
+.gap-sol { font-size: 13px; color: var(--green); line-height: 1.5; display: flex; align-items: flex-start; gap: 6px; }
+
+.val-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.6rem;
+}
+.val-q { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.val-hint { font-size: 12px; color: var(--text3); line-height: 1.5; }
+
+.skill-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.skill-item:last-child { border-bottom: none; }
+.skill-num {
+  width: 26px; height: 26px;
+  background: var(--purple-bg); color: var(--purple);
+  border: 1px solid var(--purple-border);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0; font-family: var(--mono);
+}
+.skill-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.skill-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+.book-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+}
+.book-item:last-child { border-bottom: none; }
+.book-num {
+  width: 22px; height: 22px;
+  background: var(--amber-bg); color: var(--amber);
+  border-radius: 4px; display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; flex-shrink: 0; font-family: var(--mono);
+}
+.book-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.book-why { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+.cat-bar { margin-bottom: 10px; }
+.cat-bar-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 5px; }
+.cat-bar-name { color: var(--text2); display: flex; align-items: center; gap: 5px; }
+.cat-bar-count { color: var(--text3); font-family: var(--mono); }
+.cat-track { height: 5px; background: var(--bg4); border-radius: 99px; overflow: hidden; }
+.cat-fill { height: 100%; background: var(--purple); border-radius: 99px; transition: width 0.5s; }
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin-bottom: 0.85rem;
+}
+.kpi-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.85rem;
+  text-align: center;
+}
+.kpi-val { font-size: 20px; font-weight: 700; color: var(--purple); font-family: var(--mono); }
+.kpi-lbl { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+.btn-action {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 10px 18px; border-radius: 9px;
+  border: 1px solid var(--border2);
+  background: var(--bg3); color: var(--text);
+  font-size: 14px; font-family: var(--font); font-weight: 500;
+  cursor: pointer; transition: all 0.15s;
+  margin-top: 0.5rem; width: 100%;
+}
+.btn-action:hover { background: var(--bg4); }
+.btn-danger {
+  color: var(--red); border-color: var(--red-border); background: var(--red-bg);
+  font-size: 12px; margin-top: 1.5rem;
+}
+.btn-danger:hover { opacity: 0.8; }
+
+.idea-section { margin-top: 1rem; }
+.idea-label { font-size: 12px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.idea-input {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: 8px; padding: 10px 12px;
+  color: var(--text); font-family: var(--font); font-size: 14px;
+  resize: vertical; min-height: 80px;
+}
+.idea-input:focus { outline: none; border-color: var(--purple); }
+.idea-saved { font-size: 12px; color: var(--text3); margin-top: 6px; font-family: var(--mono); }
+.saved-idea-item {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 12px; margin-bottom: 6px;
+  font-size: 13px; color: var(--text2); line-height: 1.5;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;
+}
+.del-idea { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 14px; flex-shrink: 0; }
+.del-idea:hover { color: var(--red); }
+
+.revenue-track {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 0.85rem;
+}
+.rev-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.rev-label { font-size: 13px; color: var(--text2); width: 100px; flex-shrink: 0; }
+.rev-input {
+  flex: 1; background: var(--bg4); border: 1px solid var(--border2);
+  border-radius: 6px; padding: 6px 10px;
+  color: var(--text); font-family: var(--mono); font-size: 14px;
+}
+.rev-input:focus { outline: none; border-color: var(--purple); }
+.rev-total { font-size: 18px; font-weight: 700; color: var(--green); font-family: var(--mono); }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: 10px; padding: 10px 20px;
+  font-size: 14px; font-weight: 500; color: var(--text);
+  z-index: 999; transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.purple { border-color: var(--purple-border); color: var(--purple); }
+.toast.green { border-color: var(--green-border); color: var(--green); }
+
+.confetti-wrap { position: fixed; top:0;left:0;right:0;bottom:0; pointer-events:none; z-index:9999; overflow:hidden; }
+.confetti-piece { position:absolute; width:8px; height:8px; border-radius:2px; animation:fall linear forwards; }
+@keyframes fall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1} 100%{transform:translateY(100vh) rotate(720deg);opacity:0} }
+
+.level-banner {
+  background: var(--purple-bg); border: 1px solid var(--purple-border);
+  border-radius: 10px; padding: 0.75rem 1rem;
+  font-size: 14px; color: var(--purple); font-weight: 600;
+  display: none; align-items: center; gap: 8px; margin-bottom: 1rem;
+}
+.level-banner.show { display: flex; }
+
+.divider { height: 1px; background: var(--border); margin: 1rem 0; }
+
+.badge {
+  font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px;
+}
+.badge-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.badge-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+.badge-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+.badge-red { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">
+    <div class="header-logo"><i class="ti ti-rocket"></i></div>
+    <div>
+      <div class="header-title">Entrepreneur OS</div>
+      <div class="header-sub">AI-Powered Founder Path · Age 26</div>
+    </div>
+  </div>
+  <div class="header-date" id="hdr-date"></div>
+</div>
+
+<div class="main">
+
+  <div class="level-banner" id="lvl-banner">
+    <i class="ti ti-trophy"></i>
+    <span id="lvl-banner-text">Level up!</span>
+  </div>
+
+  <div class="hud">
+    <div class="stat"><div class="stat-val purple" id="h-xp">0</div><div class="stat-lbl">Founder XP</div></div>
+    <div class="stat"><div class="stat-val" id="h-done">0</div><div class="stat-lbl">Actions done</div></div>
+    <div class="stat"><div class="stat-val green" id="h-rev">₹0</div><div class="stat-lbl">Revenue tracked</div></div>
+    <div class="stat"><div class="stat-val amber" id="h-lvl">1</div><div class="stat-lbl">Founder level</div></div>
+  </div>
+
+  <div class="xp-card">
+    <div class="xp-row">
+      <div class="xp-level" id="xp-lbl-l">Level 1 — Idea Mode</div>
+      <div class="xp-nums" id="xp-lbl-r">0 / 400 XP</div>
+    </div>
+    <div class="xp-track"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab on" onclick="sw('mindset',this)"><i class="ti ti-brain"></i> Truth First</div>
+    <div class="tab" onclick="sw('models',this)"><i class="ti ti-coin"></i> Money Models</div>
+    <div class="tab" onclick="sw('gaps',this)"><i class="ti ti-bulb"></i> Find Gaps</div>
+    <div class="tab" onclick="sw('validate',this)"><i class="ti ti-test-pipe"></i> Validate</div>
+    <div class="tab" onclick="sw('roadmap',this)"><i class="ti ti-map"></i> Roadmap</div>
+    <div class="tab" onclick="sw('skills',this)"><i class="ti ti-school"></i> Skills</div>
+    <div class="tab" onclick="sw('tracker',this)"><i class="ti ti-chart-bar"></i> My Progress</div>
+  </div>
+
+  <!-- TRUTH FIRST -->
+  <div id="mindset" class="sec on">
+    <div class="phase-tag p1"><i class="ti ti-flame"></i> Read this every single day</div>
+
+    <div class="warn-card">
+      <div class="warn-title"><i class="ti ti-alert-triangle"></i> The real reason most people don't build</div>
+      <div class="warn-desc">They wait for the perfect idea. They watch YouTube videos about startups instead of building one. They say "AI is making everyone rich" but open Instagram instead of a code editor. Watching is not building. Thinking is not shipping. You have been thinking. It is time to build.</div>
+    </div>
+
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-x"></i> Myths you must kill today</div>
+      <div class="quest" style="cursor:default">
+        <div style="width:20px;flex-shrink:0;margin-top:2px"><i class="ti ti-x" style="color:var(--red);font-size:16px"></i></div>
+        <div class="quest-text"><strong style="color:var(--text)">Myth:</strong> I need a revolutionary idea. <strong style="color:var(--green)">Truth:</strong> Every billion-dollar company solved a boring, obvious problem better than anyone else.</div>
+      </div>
+      <div class="quest" style="cursor:default">
+        <div style="width:20px;flex-shrink:0;margin-top:2px"><i class="ti ti-x" style="color:var(--red);font-size:16px"></i></div>
+        <div class="quest-text"><strong style="color:var(--text)">Myth:</strong> I need investment to start. <strong style="color:var(--green)">Truth:</strong> The best AI businesses start with ₹0 and a laptop. Your first ₹1L should come from customers, not investors.</div>
+      </div>
+      <div class="quest" style="cursor:default">
+        <div style="width:20px;flex-shrink:0;margin-top:2px"><i class="ti ti-x" style="color:var(--red);font-size:16px"></i></div>
+        <div class="quest-text"><strong style="color:var(--text)">Myth:</strong> AI will do everything for me. <strong style="color:var(--green)">Truth:</strong> AI is a tool. The founder who knows what to build and who to sell to still wins. AI just makes execution 10x faster.</div>
+      </div>
+      <div class="quest" style="cursor:default">
+        <div style="width:20px;flex-shrink:0;margin-top:2px"><i class="ti ti-x" style="color:var(--red);font-size:16px"></i></div>
+        <div class="quest-text"><strong style="color:var(--text)">Myth:</strong> I need to be fully ready before I start. <strong style="color:var(--green)">Truth:</strong> Readiness is built by starting, not by waiting.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-check"></i> Founder identity — repeat until automatic</div>
+      <div id="q-identity"></div>
+    </div>
+  </div>
+
+  <!-- MONEY MODELS -->
+  <div id="models" class="sec">
+    <div class="phase-tag p5"><i class="ti ti-coin"></i> 6 AI business models — ranked by speed to revenue</div>
+
+    <div class="model-card">
+      <div class="model-head">
+        <div class="model-name"><i class="ti ti-robot" style="color:var(--purple)"></i> AI micro-SaaS tool</div>
+        <div class="model-earn">₹50k–5L/month</div>
+      </div>
+      <div class="model-desc">Build one small, focused AI-powered web or mobile tool that solves one specific problem. Charge a monthly subscription. Examples: AI resume builder, AI invoice generator, AI content repurposer for Indian businesses.</div>
+      <div class="model-steps">
+        <div class="model-step"><div class="step-num">1</div><span>Find one painful, repetitive task a business does manually</span></div>
+        <div class="model-step"><div class="step-num">2</div><span>Build MVP in 2 weeks using AI + your app skills</span></div>
+        <div class="model-step"><div class="step-num">3</div><span>Charge ₹299–₹999/month — get 10 paying users first</span></div>
+        <div class="model-step"><div class="step-num">4</div><span>Automate, scale, add features based on user feedback</span></div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-head">
+        <div class="model-name"><i class="ti ti-brush" style="color:var(--blue)"></i> AI app agency</div>
+        <div class="model-earn">₹30k–2L/project</div>
+      </div>
+      <div class="model-desc">Businesses need custom AI tools but can't build them. You can. Offer to build AI-powered apps for small businesses — restaurants, clinics, shops, schools — at a flat project fee. Fastest path to first ₹1L.</div>
+      <div class="model-steps">
+        <div class="model-step"><div class="step-num">1</div><span>Pick one niche: clinics, restaurants, or coaching businesses</span></div>
+        <div class="model-step"><div class="step-num">2</div><span>Build one sample app for that niche (free or very cheap)</span></div>
+        <div class="model-step"><div class="step-num">3</div><span>Show it to 20 businesses in that niche — close 1 paid client</span></div>
+        <div class="model-step"><div class="step-num">4</div><span>Use that case study to sell the next 10</span></div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-head">
+        <div class="model-name"><i class="ti ti-template" style="color:var(--amber)"></i> AI template marketplace</div>
+        <div class="model-earn">₹10k–80k/month passive</div>
+      </div>
+      <div class="model-desc">Build AI prompt packs, app templates, UI kits, or automation workflows and sell them on Gumroad or Lemonsqueezy. Pure passive income once built. Low effort to start.</div>
+      <div class="model-steps">
+        <div class="model-step"><div class="step-num">1</div><span>Package your best AI workflows into sellable templates</span></div>
+        <div class="model-step"><div class="step-num">2</div><span>List on Gumroad at ₹299–₹999 per pack</span></div>
+        <div class="model-step"><div class="step-num">3</div><span>Promote on Twitter/X, Reddit, LinkedIn with short demos</span></div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-head">
+        <div class="model-name"><i class="ti ti-writing" style="color:var(--green)"></i> Build in public + audience</div>
+        <div class="model-earn">₹20k–3L/month (6–12 months)</div>
+      </div>
+      <div class="model-desc">Document your journey building AI apps. Post on Twitter/X and LinkedIn daily. Grow an audience. Monetize with courses, consulting, sponsorships. This compounds massively.</div>
+      <div class="model-steps">
+        <div class="model-step"><div class="step-num">1</div><span>Post one tweet/LinkedIn post daily — what you built or learned</span></div>
+        <div class="model-step"><div class="step-num">2</div><span>Reach 1,000 followers → launch a paid course or cohort</span></div>
+        <div class="model-step"><div class="step-num">3</div><span>Audience = distribution for every future product you build</span></div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-head">
+        <div class="model-name"><i class="ti ti-chart-bar" style="color:var(--red)"></i> AI automation retainer</div>
+        <div class="model-earn">₹15k–1L/month</div>
+      </div>
+      <div class="model-desc">Businesses waste hours on manual work — data entry, reporting, emails, social media. Build AI automations using Make, Zapier, n8n. Charge a monthly retainer to maintain them.</div>
+      <div class="model-steps">
+        <div class="model-step"><div class="step-num">1</div><span>Learn Make.com or n8n (2 weeks)</span></div>
+        <div class="model-step"><div class="step-num">2</div><span>Find one business paying someone to do manual work</span></div>
+        <div class="model-step"><div class="step-num">3</div><span>Automate it — charge ₹15k/month to maintain</span></div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-head">
+        <div class="model-name"><i class="ti ti-device-mobile" style="color:var(--blue)"></i> Niche mobile app</div>
+        <div class="model-earn">₹5k–50L/month (12–18 months)</div>
+      </div>
+      <div class="model-desc">Use your mobile app building skill to build a niche app for an underserved Indian audience — farmers, students, local businesses, vernacular language users. Monetize via freemium or subscriptions.</div>
+      <div class="model-steps">
+        <div class="model-step"><div class="step-num">1</div><span>Identify an underserved niche with a daily frustration</span></div>
+        <div class="model-step"><div class="step-num">2</div><span>Build MVP in 3 weeks — 3 features max</span></div>
+        <div class="model-step"><div class="step-num">3</div><span>Launch on Play Store free → convert to paid subscription</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0.5rem">
+      <div class="cat-title"><i class="ti ti-checkmark"></i> Which model did I choose to pursue?</div>
+      <div class="idea-section">
+        <div class="idea-label">My chosen business model</div>
+        <textarea class="idea-input" id="chosen-model" placeholder="Write your chosen model and why you picked it..." rows="3"></textarea>
+        <button class="btn-action" style="margin-top:8px;width:auto;padding:8px 16px" onclick="saveNote('chosen-model','chosen-model-saved')">
+          <i class="ti ti-device-floppy"></i> Save
+        </button>
+        <div class="idea-saved" id="chosen-model-saved"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIND GAPS -->
+  <div id="gaps" class="sec">
+    <div class="phase-tag p4"><i class="ti ti-search"></i> Gap-finding system</div>
+
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-search"></i> 5 ways to find real problems</div>
+      <div class="quest" style="cursor:default">
+        <div style="width:20px;flex-shrink:0;margin-top:2px"><i class="ti ti-message-circle" style="color:var(--blue);font-size:16px"></i></div>
+        <div class="quest-text"><strong style="color:var(--text)">Listen to complaints.</strong> Every time someone says "I wish there was an app for..." — write it down immediately.</div>
+      </div>
+      <div class="quest" style="cursor:default">
+        <div style="width:20px;flex-shrink:0;margin-top:2px"><i class="ti ti-brand-reddit" style="color:var(--amber);font-size:16px"></i></div>
+        <div class="quest-text"><strong style="color:var(--text)">Mine Reddit and Twitter.</strong> Search "[industry] + problems", "I hate how", "why is there no app for" in relevant communities.</div>
+      </div>
+      <div class="quest" style="cursor:default">
+        <div style="width:20px;flex-shrink:0;margin-top:2px"><i class="ti ti-star" style="color:var(--amber);font-size:16px"></i></div>
+        <div class="quest-text"><strong style="color:var(--text)">Read 1-star reviews.</strong> Go to App Store or Play Store. Find a decent app in any niche. Every 1-star complaint is a gap your better version can fill.</div>
+      </div>
+      <div class="quest" style="cursor:default">
+        <div style="width:20px;flex-shrink:0;margin-top:2px"><i class="ti ti-building-store" style="color:var(--green);font-size:16px"></i></div>
+        <div class="quest-text"><strong style="color:var(--text)">Walk into small businesses.</strong> Ask: "What is the most boring, repetitive thing you do every week?" That is your product.</div>
+      </div>
+      <div class="quest" style="cursor:default">
+        <div style="width:20px;flex-shrink:0;margin-top:2px"><i class="ti ti-world" style="color:var(--purple);font-size:16px"></i></div>
+        <div class="quest-text"><strong style="color:var(--text)">Find what works abroad, not here.</strong> Search Product Hunt for trending tools. Ask: does an Indian version of this exist?</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-bulb"></i> 6 real gaps in India right now</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-head">
+        <i class="ti ti-stethoscope" style="color:var(--blue);font-size:18px"></i>
+        <div class="gap-title">Small clinic management — Hyderabad</div>
+        <span class="badge badge-blue">Local edge</span>
+      </div>
+      <div class="gap-pain">Most small clinics (2–10 doctor practices) still use WhatsApp and paper for appointments, reminders, billing. Existing software is overpriced and complex for them.</div>
+      <div class="gap-sol"><i class="ti ti-arrow-right"></i> Simple AI clinic app: appointments + reminders + billing. ₹999/month. 100 clinics = ₹1L/month.</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-head">
+        <i class="ti ti-school" style="color:var(--amber);font-size:18px"></i>
+        <div class="gap-title">Coaching centre management</div>
+        <span class="badge badge-amber">High demand</span>
+      </div>
+      <div class="gap-pain">Tens of thousands of coaching centres manage students, fees, attendance via Excel or WhatsApp groups. Chaotic and error-prone for everyone involved.</div>
+      <div class="gap-sol"><i class="ti ti-arrow-right"></i> AI attendance + fee tracker + parent notifications app. ₹799/month per centre.</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-head">
+        <i class="ti ti-writing" style="color:var(--green);font-size:18px"></i>
+        <div class="gap-title">Telugu / regional language AI content tools</div>
+        <span class="badge badge-green">Untapped</span>
+      </div>
+      <div class="gap-pain">Most AI writing tools are English-only. Millions of small businesses in Telangana and Andhra need content in Telugu — social posts, ads, product descriptions.</div>
+      <div class="gap-sol"><i class="ti ti-arrow-right"></i> AI content generator in Telugu for small businesses. ₹499/month. Massive underserved market.</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-head">
+        <i class="ti ti-file-invoice" style="color:var(--purple);font-size:18px"></i>
+        <div class="gap-title">Freelancer invoicing + GST for India</div>
+        <span class="badge badge-red">Pain point</span>
+      </div>
+      <div class="gap-pain">Indian freelancers struggle with GST-compliant invoicing, TDS tracking, and payment follow-ups. Existing tools are either too basic or too expensive.</div>
+      <div class="gap-sol"><i class="ti ti-arrow-right"></i> AI invoice + GST + follow-up tool for Indian freelancers. ₹299/month.</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-head">
+        <i class="ti ti-tools" style="color:var(--amber);font-size:18px"></i>
+        <div class="gap-title">Local service booking (electricians, plumbers)</div>
+        <span class="badge badge-amber">Volume</span>
+      </div>
+      <div class="gap-pain">Finding and booking trusted local service workers is still done via WhatsApp forwards and word of mouth in most tier-2 Indian cities.</div>
+      <div class="gap-sol"><i class="ti ti-arrow-right"></i> Hyperlocal verified service booking app. Commission model 10–15% per booking.</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-head">
+        <i class="ti ti-users" style="color:var(--blue);font-size:18px"></i>
+        <div class="gap-title">HR + payroll for micro businesses</div>
+        <span class="badge badge-blue">Recurring</span>
+      </div>
+      <div class="gap-pain">Businesses with 5–20 employees (salons, shops, small factories) have no affordable, simple HR and payroll tool that handles Indian compliance and salary slips.</div>
+      <div class="gap-sol"><i class="ti ti-arrow-right"></i> Simple HR + payroll + compliance app. ₹1,499/month. Extremely sticky recurring revenue.</div>
+    </div>
+
+    <div class="card" style="margin-top:0.5rem">
+      <div class="cat-title"><i class="ti ti-notes"></i> My own gap ideas (save them here)</div>
+      <div class="idea-section">
+        <textarea class="idea-input" id="gap-input" placeholder="Type a problem or gap idea you found..."></textarea>
+        <button class="btn-action" style="margin-top:8px;width:auto;padding:8px 16px" onclick="saveIdea()">
+          <i class="ti ti-plus"></i> Save idea
+        </button>
+        <div style="margin-top:10px" id="saved-ideas"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALIDATE -->
+  <div id="validate" class="sec">
+    <div class="phase-tag p1"><i class="ti ti-test-pipe"></i> Validate before you build</div>
+
+    <div class="boss-card">
+      <div class="boss-title"><i class="ti ti-alert-triangle"></i> The founder's biggest mistake</div>
+      <div class="boss-desc">Building for months then discovering nobody wants it. Your job is to prove people will pay BEFORE you build. This takes 1–2 weeks, costs ₹0, and saves you months of wasted effort.</div>
+    </div>
+
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-list-check"></i> 2-week validation sprint — tick as you go</div>
+      <div id="q-validate"></div>
+    </div>
+
+    <div class="card">
+      <div class="cat-title" style="color:var(--green)"><i class="ti ti-check" style="color:var(--green)"></i> Green light — build it</div>
+      <div class="quest" style="cursor:default"><div style="width:20px;flex-shrink:0"><i class="ti ti-check" style="color:var(--green);font-size:15px"></i></div><div class="quest-text">At least 3 people said "I would pay for this right now"</div></div>
+      <div class="quest" style="cursor:default"><div style="width:20px;flex-shrink:0"><i class="ti ti-check" style="color:var(--green);font-size:15px"></i></div><div class="quest-text">People currently pay money (any amount) for an alternative</div></div>
+      <div class="quest" style="cursor:default"><div style="width:20px;flex-shrink:0"><i class="ti ti-check" style="color:var(--green);font-size:15px"></i></div><div class="quest-text">The problem happens at least weekly for the target person</div></div>
+      <div class="quest" style="cursor:default"><div style="width:20px;flex-shrink:0"><i class="ti ti-check" style="color:var(--green);font-size:15px"></i></div><div class="quest-text">You can build a working MVP in under 3 weeks</div></div>
+    </div>
+
+    <div class="boss-card">
+      <div class="boss-title"><i class="ti ti-x"></i> Red flags — kill it, find another idea</div>
+      <div class="boss-desc" style="display:flex;flex-direction:column;gap:6px">
+        <span>— "That's a cool idea" but nobody will pay even ₹99</span>
+        <span>— Only other entrepreneurs are interested, not actual users</span>
+        <span>— You've been thinking about it for months but talked to zero customers</span>
+        <span>— You need to "educate the market" before they want it</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-notes"></i> My idea validation notes</div>
+      <div class="idea-section">
+        <div class="idea-label">Problem statement (one sentence)</div>
+        <textarea class="idea-input" id="prob-statement" placeholder="[Who] has a problem with [what] that happens [how often] and costs them [time/money]..." rows="2"></textarea>
+        <div class="idea-label" style="margin-top:10px">Customer interview notes</div>
+        <textarea class="idea-input" id="interview-notes" placeholder="What did real customers say? Who said they would pay? What was their exact reaction?..." rows="4"></textarea>
+        <button class="btn-action" style="margin-top:8px;width:auto;padding:8px 16px" onclick="saveValidation()">
+          <i class="ti ti-device-floppy"></i> Save notes
+        </button>
+        <div class="idea-saved" id="val-saved"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div id="roadmap" class="sec">
+    <div class="phase-tag p5"><i class="ti ti-map"></i> 12-month founder roadmap</div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-val">₹10k</div><div class="kpi-lbl">Day 90 revenue goal</div></div>
+      <div class="kpi-card"><div class="kpi-val">₹30k</div><div class="kpi-lbl">Month 6 MRR goal</div></div>
+      <div class="kpi-card"><div class="kpi-val">₹1L</div><div class="kpi-lbl">Month 12 MRR goal</div></div>
+      <div class="kpi-card"><div class="kpi-val">₹10L+</div><div class="kpi-lbl">Year 3 vision</div></div>
+    </div>
+
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-flame"></i> Phase 1 — Foundation (days 1–30)</div>
+      <div id="q-road-p1"></div>
+    </div>
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-rocket"></i> Phase 2 — First revenue (days 31–90)</div>
+      <div id="q-road-p2"></div>
+    </div>
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-trending-up"></i> Phase 3 — Scale (months 4–12)</div>
+      <div id="q-road-p3"></div>
+    </div>
+
+    <div class="revenue-track">
+      <div class="cat-title" style="margin-bottom:12px"><i class="ti ti-currency-rupee"></i> Revenue tracker</div>
+      <div class="rev-row">
+        <div class="rev-label">Month 1</div>
+        <input class="rev-input" type="number" id="rev-1" placeholder="0" oninput="updateRevTotal()"/>
+        <span style="font-size:12px;color:var(--text3);margin-left:4px">₹</span>
+      </div>
+      <div class="rev-row">
+        <div class="rev-label">Month 2</div>
+        <input class="rev-input" type="number" id="rev-2" placeholder="0" oninput="updateRevTotal()"/>
+        <span style="font-size:12px;color:var(--text3);margin-left:4px">₹</span>
+      </div>
+      <div class="rev-row">
+        <div class="rev-label">Month 3</div>
+        <input class="rev-input" type="number" id="rev-3" placeholder="0" oninput="updateRevTotal()"/>
+        <span style="font-size:12px;color:var(--text3);margin-left:4px">₹</span>
+      </div>
+      <div class="divider"></div>
+      <div class="rev-row">
+        <div class="rev-label" style="font-weight:600;color:var(--text)">Total earned</div>
+        <div class="rev-total" id="rev-total">₹0</div>
+      </div>
+      <button class="btn-action" style="margin-top:0.5rem" onclick="saveRevenue()">
+        <i class="ti ti-device-floppy"></i> Save revenue
+      </button>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div id="skills" class="sec">
+    <div class="phase-tag p5"><i class="ti ti-school"></i> 6 skills that separate a hobbyist from a founder</div>
+
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-tool"></i> Learn in this exact order</div>
+      <div class="skill-item">
+        <div class="skill-num">1</div>
+        <div>
+          <div class="skill-name">Copywriting</div>
+          <div class="skill-desc">The ability to write words that make people take action. Every landing page, cold email, and social post depends on this. Study: "The Boron Letters" by Gary Halbert (free online).</div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-num">2</div>
+        <div>
+          <div class="skill-name">No-code + AI tools</div>
+          <div class="skill-desc">Bubble, Webflow, FlutterFlow, Cursor, Bolt, v0.dev — combine with your existing skills to build 10x faster. These make you a one-person startup studio.</div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-num">3</div>
+        <div>
+          <div class="skill-name">Sales — cold outreach</div>
+          <div class="skill-desc">You must learn to sell before you hire anyone to sell. Cold DM, cold email, WhatsApp pitch — practice one conversation every day. That teaches more than any course.</div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-num">4</div>
+        <div>
+          <div class="skill-name">Basic financial literacy</div>
+          <div class="skill-desc">MRR, churn, CAC, LTV, burn rate — you must know these cold. A founder who doesn't understand unit economics will always run out of money.</div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-num">5</div>
+        <div>
+          <div class="skill-name">Distribution — marketing</div>
+          <div class="skill-desc">Building is 20% of the job. Getting people to your product is 80%. Learn SEO basics, short-form content, community marketing, word of mouth systems.</div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-num">6</div>
+        <div>
+          <div class="skill-name">AI prompting and workflow design</div>
+          <div class="skill-desc">You already use AI to build — go deeper. Learn to build full AI agents, multi-step workflows, and AI-powered automations. This is the skill of the decade.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-book"></i> Founder reading list — in order</div>
+      <div class="book-item">
+        <div class="book-num">1</div>
+        <div><div class="book-title">The Mom Test — Rob Fitzpatrick</div><div class="book-why">How to talk to customers without lying to yourself. Read this before building anything.</div></div>
+      </div>
+      <div class="book-item">
+        <div class="book-num">2</div>
+        <div><div class="book-title">Zero to One — Peter Thiel</div><div class="book-why">Think about monopoly, not competition. Changes how you see business forever.</div></div>
+      </div>
+      <div class="book-item">
+        <div class="book-num">3</div>
+        <div><div class="book-title">The Lean Startup — Eric Ries</div><div class="book-why">Build, measure, learn loop. How to validate and iterate without burning money.</div></div>
+      </div>
+      <div class="book-item">
+        <div class="book-num">4</div>
+        <div><div class="book-title">$100M Offers — Alex Hormozi</div><div class="book-why">Make your product so good people feel stupid saying no. Best pricing and packaging book.</div></div>
+      </div>
+      <div class="book-item">
+        <div class="book-num">5</div>
+        <div><div class="book-title">Almanack of Naval Ravikant</div><div class="book-why">Wealth, leverage, and building for the long game. Free online. Read it twice.</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-checkmark"></i> Skills checklist — tick when you feel solid</div>
+      <div id="q-skills"></div>
+    </div>
+  </div>
+
+  <!-- MY PROGRESS -->
+  <div id="tracker" class="sec">
+    <div class="phase-tag p5"><i class="ti ti-chart-bar"></i> My founder progress</div>
+
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-chart-bar"></i> Completion by area</div>
+      <div id="cat-progress"></div>
+    </div>
+
+    <div class="card">
+      <div class="cat-title"><i class="ti ti-notes"></i> Weekly founder journal</div>
+      <div class="idea-section">
+        <div class="idea-label">What I shipped this week</div>
+        <textarea class="idea-input" id="journal-shipped" placeholder="What did you actually build, send, or launch this week?..." rows="2"></textarea>
+        <div class="idea-label" style="margin-top:10px">Biggest blocker</div>
+        <textarea class="idea-input" id="journal-blocker" placeholder="What stopped you or slowed you down?..." rows="2"></textarea>
+        <div class="idea-label" style="margin-top:10px">Next week's #1 priority</div>
+        <textarea class="idea-input" id="journal-next" placeholder="The single most important thing to do next week..." rows="2"></textarea>
+        <button class="btn-action" style="margin-top:8px;width:auto;padding:8px 16px" onclick="saveJournal()">
+          <i class="ti ti-device-floppy"></i> Save journal entry
+        </button>
+        <div class="idea-saved" id="journal-saved"></div>
+      </div>
+    </div>
+
+    <button class="btn-action btn-danger" onclick="resetAll()">
+      <i class="ti ti-trash"></i> Reset all progress
+    </button>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="confetti-wrap" id="confetti"></div>
+
+<script>
+const QUESTS = {
+  'identity': [
+    {t:'I am a problem-solver first, builder second, marketer third', xp:0},
+    {t:'I talk to real people about real problems before writing one line of code', xp:0},
+    {t:'I ship ugly and improve — perfection is procrastination in disguise', xp:0},
+    {t:'I measure everything: users, revenue, churn, feedback', xp:0},
+    {t:'I treat every failure as a data point, not a verdict on my worth', xp:0},
+  ],
+  'validate': [
+    {t:'Day 1–2: Write problem statement — who, what, how often, how painful', xp:20},
+    {t:'Day 3–5: Talk to 10 real potential customers (not friends)', xp:50},
+    {t:'Day 5: Confirm people currently pay something for an alternative', xp:20},
+    {t:'Day 6–7: Build landing page on Carrd.co — describe problem and solution', xp:30},
+    {t:'Day 8–10: Drive 100 real people to that landing page', xp:40},
+    {t:'Day 10: Get at least 20 email signups from strangers', xp:40},
+    {t:'Day 11–14: Contact signups directly — offer early access for ₹199', xp:50},
+    {t:'Day 14: Get at least 5 people to pay — even ₹1 — now you have a business', xp:100},
+  ],
+  'road-p1': [
+    {t:'Pick ONE business model — commit to it for 90 days minimum', xp:30},
+    {t:'Talk to 30 potential customers in person, WhatsApp, or LinkedIn', xp:60},
+    {t:'Identify your ONE problem to solve — specific, painful, frequent', xp:30},
+    {t:'Build a landing page in 1 day — problem and solution only', xp:40},
+    {t:'Post on Twitter/X or LinkedIn daily about what you are building', xp:50},
+    {t:'Learn Make.com or n8n basics — 1 hour per day for 2 weeks', xp:40},
+  ],
+  'road-p2': [
+    {t:'Build MVP — 3 features max, ugly is fine, working is everything', xp:80},
+    {t:'Get 5 beta users — free access for brutal feedback', xp:60},
+    {t:'Fix the top 3 complaints from beta users — ship fast', xp:50},
+    {t:'Charge your first customer — even ₹199 changes your identity forever', xp:100},
+    {t:'Reach ₹10,000 total revenue by day 90', xp:150},
+  ],
+  'road-p3': [
+    {t:'Double down on what got paying customers — repeat the process', xp:60},
+    {t:'Add referral system — every user brings one more user', xp:50},
+    {t:'Automate customer onboarding and support with AI', xp:60},
+    {t:'Explore a second revenue stream from the same customer base', xp:50},
+    {t:'Track MRR weekly — aim for ₹1L MRR by month 12', xp:80},
+  ],
+  'skills': [
+    {t:'Copywriting — I can write words that make people take action', xp:40},
+    {t:'No-code + AI tools — I can build apps without knowing every language', xp:40},
+    {t:'Cold outreach — I can send 10 cold messages per day without fear', xp:40},
+    {t:'Financial basics — I know MRR, CAC, LTV, churn, burn rate', xp:30},
+    {t:'Distribution — I understand SEO basics and community marketing', xp:30},
+    {t:'AI workflow design — I can build multi-step AI automations', xp:40},
+  ],
+};
+
+const LEVELS = [
+  {lvl:1,name:'Idea Mode',min:0},
+  {lvl:2,name:'Explorer',min:400},
+  {lvl:3,name:'Validator',min:900},
+  {lvl:4,name:'Builder',min:1600},
+  {lvl:5,name:'Launcher',min:2500},
+  {lvl:6,name:'Founder',min:3500},
+  {lvl:7,name:'CEO',min:5000},
+];
+
+const CAT_META = {
+  'Validate':{icon:'ti-test-pipe',keys:['validate']},
+  'Roadmap':{icon:'ti-map',keys:['road-p1','road-p2','road-p3']},
+  'Skills':{icon:'ti-school',keys:['skills']},
+};
+
+let state = {};
+let prevLevel = 1;
+
+function load() {
+  try { state = JSON.parse(localStorage.getItem('eos_v1') || '{}'); } catch(e) { state={}; }
+  prevLevel = getLevel(totalXP()).lvl;
+}
+function save() {
+  try { localStorage.setItem('eos_v1', JSON.stringify(state)); } catch(e) {}
+}
+
+function totalXP() {
+  let xp = 0;
+  Object.keys(QUESTS).forEach(cat => {
+    QUESTS[cat].forEach((q,i) => { if(state[cat+'__'+i]) xp += q.xp; });
+  });
+  return xp;
+}
+function totalDone() {
+  let d = 0;
+  Object.keys(QUESTS).forEach(cat => {
+    QUESTS[cat].forEach((q,i) => { if(state[cat+'__'+i]) d++; });
+  });
+  return d;
+}
+function getLevel(xp) {
+  for(let i=LEVELS.length-1;i>=0;i--) { if(xp>=LEVELS[i].min) return LEVELS[i]; }
+  return LEVELS[0];
+}
+
+function updateHUD() {
+  const xp = totalXP();
+  const done = totalDone();
+  const lv = getLevel(xp);
+  const nextIdx = LEVELS.findIndex(l=>l.lvl===lv.lvl)+1;
+  const next = LEVELS[nextIdx] || lv;
+  const progress = lv.lvl===7 ? 100 : Math.round(((xp-lv.min)/(next.min-lv.min))*100);
+  const rev = calcRev();
+
+  document.getElementById('h-xp').textContent = xp;
+  document.getElementById('h-done').textContent = done;
+  document.getElementById('h-rev').textContent = '₹'+rev.toLocaleString('en-IN');
+  document.getElementById('h-lvl').textContent = lv.lvl;
+  document.getElementById('xp-lbl-l').textContent = 'Level '+lv.lvl+' — '+lv.name;
+  document.getElementById('xp-lbl-r').textContent = xp+' / '+(lv.lvl===7?'MAX':next.min)+' XP';
+  document.getElementById('xp-fill').style.width = Math.min(progress,100)+'%';
+
+  if(lv.lvl > prevLevel) {
+    const b = document.getElementById('lvl-banner');
+    document.getElementById('lvl-banner-text').textContent = 'Level up! You are now Level '+lv.lvl+' — '+lv.name;
+    b.classList.add('show');
+    launchConfetti();
+    prevLevel = lv.lvl;
+    setTimeout(()=>b.classList.remove('show'),5000);
+  }
+}
+
+function calcRev() {
+  let t = 0;
+  for(let i=1;i<=3;i++) {
+    const v = parseFloat((state['rev_'+i])||0);
+    if(!isNaN(v)) t += v;
+  }
+  return t;
+}
+
+function renderQuests(catKey, containerId) {
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  el.innerHTML = '';
+  QUESTS[catKey].forEach((q,i) => {
+    const done = !!state[catKey+'__'+i];
+    const div = document.createElement('div');
+    div.className = 'quest';
+    div.innerHTML = `
+      <div class="quest-box${done?' done':''}">
+        ${done?'<i class="ti ti-check"></i>':''}
+      </div>
+      <div class="quest-text${done?' done':''}">${q.t}</div>
+      ${q.xp>0?`<div class="xp-chip">+${q.xp}</div>`:''}
+    `;
+    div.addEventListener('click',()=>toggle(catKey,i,containerId));
+    el.appendChild(div);
+  });
+}
+
+function toggle(cat,i,containerId) {
+  const key = cat+'__'+i;
+  const wasOn = !!state[key];
+  state[key] = !wasOn;
+  save();
+  renderQuests(cat,containerId);
+  updateHUD();
+  renderCatProgress();
+  if(!wasOn && QUESTS[cat][i].xp>0) showToast('+'+QUESTS[cat][i].xp+' XP — Action complete!', 'purple');
+}
+
+function renderAllQuests() {
+  Object.keys(QUESTS).forEach(k => renderQuests(k,'q-'+k));
+}
+
+function renderCatProgress() {
+  const el = document.getElementById('cat-progress');
+  if(!el) return;
+  el.innerHTML = '';
+  Object.keys(CAT_META).forEach(cat => {
+    const meta = CAT_META[cat];
+    let done=0, total=0;
+    meta.keys.forEach(k => {
+      QUESTS[k].forEach((q,i)=>{
+        total++;
+        if(state[k+'__'+i]) done++;
+      });
+    });
+    const pct = total ? Math.round((done/total)*100) : 0;
+    const div = document.createElement('div');
+    div.className = 'cat-bar';
+    div.innerHTML = `
+      <div class="cat-bar-row">
+        <span class="cat-bar-name"><i class="ti ${meta.icon}"></i> ${cat}</span>
+        <span class="cat-bar-count">${done}/${total}</span>
+      </div>
+      <div class="cat-track"><div class="cat-fill" style="width:${pct}%"></div></div>
+    `;
+    el.appendChild(div);
+  });
+}
+
+function saveNote(inputId, savedId) {
+  const val = document.getElementById(inputId).value.trim();
+  if(!val) return;
+  state['note_'+inputId] = val;
+  save();
+  document.getElementById(savedId).textContent = 'Saved at '+new Date().toLocaleTimeString();
+  showToast('Saved!','green');
+}
+
+function loadNotes() {
+  ['chosen-model','prob-statement','interview-notes','journal-shipped','journal-blocker','journal-next'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el && state['note_'+id]) el.value = state['note_'+id];
+  });
+  for(let i=1;i<=3;i++) {
+    const el = document.getElementById('rev-'+i);
+    if(el && state['rev_'+i]) el.value = state['rev_'+i];
+  }
+  renderSavedIdeas();
+  updateRevTotal();
+}
+
+function saveIdea() {
+  const val = document.getElementById('gap-input').value.trim();
+  if(!val) return;
+  const ideas = state._ideas || [];
+  ideas.push({t:val, at:new Date().toLocaleDateString()});
+  state._ideas = ideas;
+  save();
+  document.getElementById('gap-input').value = '';
+  renderSavedIdeas();
+  showToast('Idea saved!','green');
+}
+
+function renderSavedIdeas() {
+  const el = document.getElementById('saved-ideas');
+  if(!el) return;
+  const ideas = state._ideas || [];
+  el.innerHTML = '';
+  ideas.forEach((idea,idx) => {
+    const div = document.createElement('div');
+    div.className = 'saved-idea-item';
+    div.innerHTML = `<span>${idea.t} <span style="color:var(--text3);font-size:11px;margin-left:4px">${idea.at}</span></span><button class="del-idea" onclick="deleteIdea(${idx})"><i class="ti ti-x"></i></button>`;
+    el.appendChild(div);
+  });
+}
+
+function deleteIdea(idx) {
+  const ideas = state._ideas || [];
+  ideas.splice(idx,1);
+  state._ideas = ideas;
+  save();
+  renderSavedIdeas();
+}
+
+function saveValidation() {
+  ['prob-statement','interview-notes'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) state['note_'+id] = el.value;
+  });
+  save();
+  document.getElementById('val-saved').textContent = 'Saved at '+new Date().toLocaleTimeString();
+  showToast('Validation notes saved!','green');
+}
+
+function saveJournal() {
+  ['journal-shipped','journal-blocker','journal-next'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) state['note_'+id] = el.value;
+  });
+  save();
+  document.getElementById('journal-saved').textContent = 'Journal saved at '+new Date().toLocaleTimeString();
+  showToast('Journal entry saved!','green');
+}
+
+function updateRevTotal() {
+  let t = 0;
+  for(let i=1;i<=3;i++) {
+    const v = parseFloat(document.getElementById('rev-'+i)?.value||0);
+    if(!isNaN(v)) t += v;
+  }
+  const el = document.getElementById('rev-total');
+  if(el) el.textContent = '₹'+Math.round(t).toLocaleString('en-IN');
+}
+
+function saveRevenue() {
+  for(let i=1;i<=3;i++) {
+    const el = document.getElementById('rev-'+i);
+    if(el) state['rev_'+i] = el.value;
+  }
+  save();
+  updateHUD();
+  showToast('Revenue saved!','green');
+}
+
+function resetAll() {
+  if(!confirm('Reset ALL progress? This cannot be undone.')) return;
+  state = {};
+  prevLevel = 1;
+  save();
+  renderAllQuests();
+  updateHUD();
+  renderCatProgress();
+  loadNotes();
+  showToast('Progress reset. Start again.','');
+}
+
+function sw(id, el) {
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  el.classList.add('on');
+}
+
+function showToast(msg, color) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast'+(color?' '+color:'');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+function launchConfetti() {
+  const c = document.getElementById('confetti');
+  c.innerHTML = '';
+  const colors = ['#a855f7','#22c55e','#3b82f6','#f59e0b','#ef4444'];
+  for(let i=0;i<60;i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.cssText = `left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${1.2+Math.random()*1.5}s;animation-delay:${Math.random()*0.5}s;width:${6+Math.random()*6}px;height:${6+Math.random()*6}px;`;
+    c.appendChild(p);
+    setTimeout(()=>p.remove(),3000);
+  }
+}
+
+document.getElementById('hdr-date').textContent = new Date().toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+
+load();
+renderAllQuests();
+updateHUD();
+renderCatProgress();
+loadNotes();
+</script>
+</body>
+</html>
